@@ -19,6 +19,14 @@ export default {
     preloaderStatus(){
       return this.$store.getters['getPreloaderStatus']
     }
+  },
+  created() {
+    console.log(this.preloaderStatus)
+  },
+  watch: {
+    preloaderStatus: function () {
+      console.log(this.preloaderStatus)
+    }
   }
 }
 </script>

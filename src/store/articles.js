@@ -25,6 +25,7 @@ export default {
       ctx.commit('setArticles', articles)
     },
     async create(ctx, article){
+
       const start = new Date().getTime();
 
       const newArticle = await articlesServices.create(article)
@@ -33,6 +34,7 @@ export default {
       const end = new Date().getTime();
       const time = end - start
       console.log(time)
+
       ctx.commit('setTime', time)
     }
   },

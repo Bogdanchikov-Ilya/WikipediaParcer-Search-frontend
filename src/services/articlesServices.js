@@ -12,6 +12,7 @@ class articlesServices {
   }
   async create(article) {
     try {
+      store.commit('setPreloader', true)
       let formData = new FormData();
       formData.append('title', article.title)
       formData.append('body', article.body.replace(/\s+/g, ' ').trim())
@@ -35,6 +36,8 @@ class articlesServices {
     } catch (e) {
       console.log(e)
       throw e
+    }finally {
+      store.commit('setPreloader', false)
     }
   }
 }
