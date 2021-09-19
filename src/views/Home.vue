@@ -8,7 +8,7 @@
           <b-button variant="primary" @click="handleSubmit()">Скопировать</b-button>
         </div>
       </form>
-      <div class="info d-flex flex-column mt-5" v-if="url">
+      <div class="info d-flex flex-column mt-5" v-if="time">
         <p class="mb-3">Импорт завершен</p>
         <ul>
           <li>Найдена статья по адресу - <span><a :href="url">{{url}}</a></span></li>
@@ -49,7 +49,6 @@ export default {
       title: '',
       body: '',
       url: '',
-      // time: '',
       size: '',
       wordCounter: '',
     }
@@ -77,27 +76,25 @@ export default {
     },
 
     async handleSubmit() {
+      this.$store.commit('setPreloader', true)
       const inputValue = this.searchValue
       const searchQuery = inputValue.trim();
 
       try {
-        const start = new Date().getTime();
         const results = await this.searchWikipedia(searchQuery);
         this.title = results.query.search[0].title;
         this.url = `https://ru.wikipedia.org/?curid=${results.query.search[0].pageid}`
-        // const url = `https://ru.wikipedia.org/?curid=${results.query.search[0].pageid}`;
+
         const pageid =  results.query.search[0].pageid.toString()
-        //console.log(results.query.search[0].title);
+
         this.size = results.query.search[0].size /1024; // размер в Кб
         this.wordCounter = results.query.search[0].wordcount; // кличество слов
-        //console.log(results.query.search[0].size);
+
         const text = await this.takeText(results.query.search[0].title)
 
         let div = document.createElement('div');
         div.innerHTML = text.query.pages[pageid].extract;
         this.body = div.innerText
-        // console.log(this.body)
-        //console.log(div.innerText); // - clear text
 
         this.$store.dispatch('articles/create', {
           title: this.title,
@@ -113,6 +110,7 @@ export default {
         console.log(err);
         alert('Ошибка поиска');
       }
+      this.searchValue = ''
     },
 
     async takeText(aName) {
@@ -124,10 +122,6 @@ export default {
       } catch (e) {
         throw e
       }
-    },
-
-    async getArticles() {
-
     }
   }
 }
@@ -135,7 +129,7 @@ export default {
 
 <style scoped>
 .info{
- background-color: #efefef;
+  background-color: #efefef;
   padding: 1.5em;
 }
 </style>

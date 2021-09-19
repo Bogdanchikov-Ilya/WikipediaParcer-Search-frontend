@@ -12,31 +12,25 @@ class articlesServices {
   }
   async create(article) {
     try {
-      store.commit('setPreloader', true)
       let formData = new FormData();
       formData.append('title', article.title)
       formData.append('body', article.body.replace(/\s+/g, ' ').trim())
       formData.append('url', article.url)
       formData.append('size', article.size)
       formData.append('count_words', article.wordCounter)
-      console.log(formData.get('title'))
-      console.log(formData.get('body'))
-      console.log(formData.get('url'))
-      console.log(formData.get('size'))
-      console.log(formData.get('count_words'))
       const res = await fetch('http://parcer-back/articles', {
         method: 'POST',
         body: formData
       })
       console.log(res)
-      if(res.status == 201) {
+      if(res) {
         store.dispatch('articles/getAll')
       }
       return res.data
     } catch (e) {
       console.log(e)
       throw e
-    }finally {
+    } finally {
       store.commit('setPreloader', false)
     }
   }

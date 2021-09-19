@@ -1,20 +1,17 @@
 <template>
   <div id="app">
     <preloader v-if="preloaderStatus"/>
-    <div>
-      <b-nav tabs fill>
-        <b-nav-item><router-link to="/">Импорт статей</router-link></b-nav-item>
-        <b-nav-item><router-link to="/search">Поиск</router-link></b-nav-item>
-      </b-nav>
-    </div>
+    <Header />
     <router-view/>
   </div>
 </template>
 
 <script>
+import Header from "@/components/header";
 import preloader from "@/components/preloader";
+
 export default {
-  components:{preloader},
+  components:{Header, preloader},
   computed: {
     preloaderStatus(){
       return this.$store.getters['getPreloaderStatus']
@@ -25,7 +22,11 @@ export default {
   },
   watch: {
     preloaderStatus: function () {
-      console.log(this.preloaderStatus)
+      if(this.preloaderStatus == true){
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
     }
   }
 }
