@@ -5,7 +5,7 @@ export default {
 
   state: {
     articles: [],
-    article: null,
+    // article: null,
     time: null
   },
   mutations: {
@@ -33,7 +33,7 @@ export default {
       const end = new Date().getTime();
       const time = end - start
       ctx.commit('setTime', time)
-    }
+    },
   },
   getters: {
     getArticles(state) {

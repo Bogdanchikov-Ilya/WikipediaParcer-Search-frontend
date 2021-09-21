@@ -34,6 +34,10 @@ class articlesServices {
       store.commit('setPreloader', false)
     }
   }
+  async search(searchValue) {
+    let formData = new FormData();
+    formData.append('text', )
+  }
 }
 
 export default new articlesServices()
