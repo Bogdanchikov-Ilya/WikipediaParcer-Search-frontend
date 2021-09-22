@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="container">
+      <b>{{getTotalPrice}} всего вхождений найдено</b>
       <form class="flex flex-nowrap" @submit.prevent="search()">
         <label class="sr-only mb-1">Поиск статьи по слову</label>
         <div class="form-item d-flex justify-content-between">
@@ -42,6 +43,9 @@ export default {
   computed: {
     searchList () {
       return this.$store.getters['getSearchList']
+    },
+    getTotalPrice() {
+      return this.$store.getters['getTotalPrice']
     }
   },
   methods:{

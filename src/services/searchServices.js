@@ -1,6 +1,3 @@
-import {api} from "../api/api.js"
-import store from '../store'
-
 class searchServices {
   async search(searchValue) {
     try {

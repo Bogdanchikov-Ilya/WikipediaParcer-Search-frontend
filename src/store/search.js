@@ -17,7 +17,12 @@ export default {
   },
   getters: {
     getSearchList(state){
-      return state.searchList
+      return state.searchList.sort((a, b) => parseFloat(a.counter) - parseFloat(b.counter)).reverse();
+    },
+    getTotalPrice(state) {
+      if(state.searchList.length != 0) {
+        return state.searchList.reduce((prev,next) => prev + next.counter,0);
+      }
     }
   }
 }
