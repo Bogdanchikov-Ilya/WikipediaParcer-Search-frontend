@@ -4,7 +4,7 @@ class searchServices {
       let formData = new FormData();
       formData.append('text', searchValue.text)
       console.log(formData.get('text'))
-      const res = await fetch('http://cw60005.tmweb.ru/search', {
+      const res = await fetch('https://cw60005.tmweb.ru/search', {
         method: 'POST',
         body: formData
       })
