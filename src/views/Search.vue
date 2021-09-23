@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <b>{{getTotalPrice}} всего вхождений найдено</b>
+      <b v-if="searchList.length > 0">{{getTotalPrice}} всего вхождений найдено</b>
       <form class="flex flex-nowrap" @submit.prevent="search()">
         <label class="sr-only mb-1">Поиск статьи по слову</label>
         <div class="form-item d-flex justify-content-between">
@@ -68,6 +68,14 @@ export default {
         throw e
       } finally {
         this.$store.commit('setPreloader', false)
+      }
+    }
+  },
+  watch: {
+    searchList: function () {
+      if(this.searchList.length == 0){
+        alert('Ничего не нашлось')
+        this.searchValue = ''
       }
     }
   }

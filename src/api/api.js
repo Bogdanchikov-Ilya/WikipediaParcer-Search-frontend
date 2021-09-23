@@ -2,8 +2,8 @@ import axios from "axios";
 
 export const api = axios.create({
   headers: {
-    'Content-type': 'application/json'
+    'Content-type': 'application/json',
   },
-  baseURL: 'http://parcer-back/',
+  baseURL: 'http://cw60005.tmweb.ru/',
   responseType: 'json'
 })

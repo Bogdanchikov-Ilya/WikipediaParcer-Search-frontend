@@ -18,7 +18,7 @@ class articlesServices {
       formData.append('url', article.url)
       formData.append('size', article.size)
       formData.append('count_words', article.wordCounter)
-      const res = await fetch('http://parcer-back/articles', {
+      const res = await fetch('http://cw60005.tmweb.ru/articles', {
         method: 'POST',
         body: formData
       })
