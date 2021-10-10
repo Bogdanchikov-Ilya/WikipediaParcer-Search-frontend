@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/front-wiki/'
+  publicPath: '/WikipediaParcer-Search-frontend/'
 }
