@@ -3,12 +3,34 @@
     <div class="loader"></div>
     <p class="text">Загрузка ...</p>
     <span>Примерно секнунд 10-20</span>
+    <span>{{sec}}</span>
   </div>
 </template>
 
 <script>
 export default {
-
+  data () {
+    return {
+      sec: 0,
+      timer: null
+    }
+  },
+  methods: {
+    startTimer() {
+      this.timer = setInterval(() => {
+        this.sec++
+      }, 1000)
+    },
+    stopTimer() {
+      clearTimeout(this.timer)
+    }
+  },
+  mounted() {
+    this.startTimer()
+  },
+  destroyed() {
+    this.stopTimer()
+  }
 }
 </script>
 

@@ -50,10 +50,11 @@ export default {
   },
   methods:{
     search() {
-      console.log(this.searchValue)
-      this.$store.dispatch('search', {
-        text: this.searchValue
-      })
+      if(this.searchValue.trim() !== ''){
+        this.$store.dispatch('search', {
+          text: this.searchValue
+        })
+      }else {alert('Пустая строка')}
     },
     async getArticle(articleName) {
       try {
@@ -70,15 +71,15 @@ export default {
         this.$store.commit('setPreloader', false)
       }
     }
-  },
-  watch: {
-    searchList: function () {
-      if(this.searchList.length == 0){
-        alert('Ничего не нашлось')
-        this.searchValue = ''
-      }
-    }
   }
+  // watch: {
+  //   searchList: function () {
+  //     if(this.searchList.length == 0){
+  //       alert('Ничего не нашлось')
+  //       this.searchValue = ''
+  //     }
+  //   }
+  // }
 }
 </script>
 

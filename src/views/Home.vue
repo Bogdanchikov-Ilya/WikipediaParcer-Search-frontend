@@ -18,7 +18,8 @@
         </ul>
       </div>
       <hr>
-      <table class="table mt-5">
+      <p v-if="articles.length == 0">Список статей пуст</p>
+      <table class="table mt-5" v-if="articles.length !== 0">
         <thead>
         <tr>
           <th scope="col">Название статьи</th>
@@ -76,6 +77,11 @@ export default {
     },
 
     async handleSubmit() {
+      if(this.searchValue.trim() == ''){
+        this.searchValue = ''
+        alert('Пустая строка')
+        return
+      }
       this.$store.commit('setPreloader', true)
       const inputValue = this.searchValue
       const searchQuery = inputValue.trim();
@@ -94,7 +100,7 @@ export default {
 
         let div = document.createElement('div');
         div.innerHTML = text.query.pages[pageid].extract;
-        this.body = div.innerText
+        this.body = div.innerText // сам текст
 
         this.$store.dispatch('articles/create', {
           title: this.title,
@@ -103,12 +109,14 @@ export default {
           size: this.size,
           wordCounter: this.wordCounter
         })
+
         if(results.length < 1) {
           alert('Ничего не найдено!')
         }
       } catch (err) {
         console.log(err);
         alert('Ошибка поиска');
+        this.$store.commit('setPreloader', false)
       }
       this.searchValue = ''
     },
@@ -118,6 +126,7 @@ export default {
         const result = await fetch(`https://ru.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&titles=${aName}&redirects=true`)
         console.log(`https://ru.wikipedia.org/w/api.php?format=json&origin=*&action=query&prop=extracts&titles=${aName}&redirects=true`)
         const json = await result.json();
+        console.log(json)
         return json;
       } catch (e) {
         throw e

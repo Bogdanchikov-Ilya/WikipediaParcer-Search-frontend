@@ -4,7 +4,8 @@ import store from '../store'
 class articlesServices {
   async getAll() {
     try {
-      const res = await api.get('/articles')
+      const res = await api.get('https://cw60005.tmweb.ru/api/search/')
+      console.log(res.data)
       return res.data
     } catch (e) {
       throw e
@@ -18,11 +19,16 @@ class articlesServices {
       formData.append('url', article.url)
       formData.append('size', article.size)
       formData.append('count_words', article.wordCounter)
-      const res = await fetch('https://cw60005.tmweb.ru/articles', {
+
+      const res = await fetch('https://cw60005.tmweb.ru/api/articles/', {
         method: 'POST',
         body: formData
       })
       console.log(res)
+      if(res.status == 400){
+        alert('Такая статья уже существует')
+        this.$store.state.time = null
+      }
       if(res) {
         store.dispatch('articles/getAll')
       }
